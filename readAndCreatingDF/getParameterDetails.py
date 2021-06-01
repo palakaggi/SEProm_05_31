@@ -52,16 +52,12 @@ def iterateSequences(sequence_map):
     }
     for key in sequence_map.keys():
         parameters['normalized_params_map'][key] = calculateParameters(sequence_map[key])
+        parameters['combined_params_map']['energyDecreasing_params'][key] = combineStructEnergyParams(energyDecreasing_params,parameters['normalized_params_map'][key])
+        parameters['combined_params_map']['energyIncreasing_params'][key] = combineStructEnergyParams(energyIncreasing_params,parameters['normalized_params_map'][key])
+        parameters['combined_params_map']['structuralIncreasing_params'][key] = combineStructEnergyParams(structuralIncreasing_params,parameters['normalized_params_map'][key])
+        parameters['combined_params_map']['structuralDecreasing_params'][key] = combineStructEnergyParams(structuralDecreasing_params,parameters['normalized_params_map'][key])
 
-        # print(len(parameters['normalized_params_map'][key]['a']))
-        # import sys
-        # sys.exit()
-       # parameters['combined_params_map']['energyDecreasing_params'][key] = combineStructEnergyParams(energyDecreasing_params,parameters['normalized_params_map'][key])
-       # parameters['combined_params_map']['energyIncreasing_params'][key] = combineStructEnergyParams(energyIncreasing_params,parameters['normalized_params_map'][key])
-       # parameters['combined_params_map']['structuralIncreasing_params'][key] = combineStructEnergyParams(structuralIncreasing_params,parameters['normalized_params_map'][key])
-       # parameters['combined_params_map']['structuralDecreasing_params'][key] = combineStructEnergyParams(structuralDecreasing_params,parameters['normalized_params_map'][key])
-
-   # parameters['combined_params_map'] = transformStructEnerMap(parameters['combined_params_map'])
+    parameters['combined_params_map'] = transformStructEnerMap(parameters['combined_params_map'])
     # print (parameters['combined_params_map'][20]['energyDecreasing_params'])
     return parameters
 
@@ -109,16 +105,12 @@ def calculateMovingAverages(param_map):
             this_window = arr[i : i+moving_win_size]
             window_avg = sum(this_window)/moving_win_size
             moving_param_map[k].append(window_avg)
-    # print(len(moving_param_map['a']))
-    # print(datetime.datetime.now())
-    # return
     return normalizeMovingAverages(moving_param_map)
 
 def normalizeMovingAverages(moving_param_map):
     normalized_map = {}
     for k in moving_param_map.keys():
         arr = moving_param_map[k]
-        # maxArr = max(arr)
         minArr = min(arr)
         range = max(arr)-minArr
         normalized_map[k] = []
@@ -781,7 +773,6 @@ def calculateParameters(b_arr2):
     return calculateMovingAverages(param_map)
 
 def combineStructEnergyParams(array,normalized_map):
-    # map = {}
     map = {x:0 for x in range(976)}
     for k in array:
         arr = normalized_map[k]
@@ -799,7 +790,4 @@ def transformStructEnerMap(struct_ener_map):
             except KeyError:
                 transformed_map[seq] = {}
             transformed_map[seq][k] = struct_ener_map[k][seq]
-            # print transformed_map[0]['energyDecreasing_params']
-            # import sys
-            # sys.exit()
     return transformed_map
