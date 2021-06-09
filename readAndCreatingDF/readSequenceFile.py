@@ -20,7 +20,7 @@ def readSequenceFile(filepath):
                             string= 'ATGC'
                             for j in range(len(m)):
                                 if m[j] not in string:
-                                    print(m[j])
+                                    # print(m[j])
                                     b = False
                                     break
                             if b == True:
