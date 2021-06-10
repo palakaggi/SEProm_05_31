@@ -7,8 +7,8 @@ import datetime
 
 print(datetime.datetime.now())
 
-filepath_tss = "/Users/palakaggarwal/Desktop/dinucleotide_project/train_data/TSS_Seq/Salmonella enteric serovar typhimurium"
-filepath_cds = "//Users/palakaggarwal/Desktop/dinucleotide_project/train_data/CDS_Seq/Salmonella_enteric_serovar_typhimurium_CDS"
+filepath_tss = "/Users/palakaggarwal/Desktop/Palak/Projects/SEProm_04_28/train_data/tss.txt"
+filepath_cds = "/Users/palakaggarwal/Desktop/Palak/Projects/SEProm_04_28/train_data/cds.txt"
 
 try:
     f = open(filepath_tss)
@@ -18,6 +18,7 @@ except NameError:
 sequence_map_tss = readSequenceFile.readSequenceFile(filepath_tss)
 sequence_map_cds = readSequenceFile.readSequenceFile(filepath_cds)
 
+print("reading done!")
 # print(sequence_map_tss.keys())
 
 parameter_map_tss = {}
@@ -26,6 +27,11 @@ parameter_map_tss = getParameterDetails.iterateSequences(sequence_map_tss)
 parameter_map_cds = {}
 parameter_map_cds = getParameterDetails.iterateSequences(sequence_map_cds)
 
+print("getParameterDetails done!!")
+print(datetime.datetime.now())
+
+import sys
+sys.exit()
 
 # print(parameter_map_tss['combined_params_map'][0])
 

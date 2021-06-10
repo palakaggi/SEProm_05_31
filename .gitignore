@@ -4,4 +4,3 @@ training80window_no_mov_avg.csv
 .idea/
 *.png
 asyncPython.py
-readAndCreatingDF/
