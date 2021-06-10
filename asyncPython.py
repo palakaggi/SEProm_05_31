@@ -1,17 +1,15 @@
 from multiprocessing import *
+import os
 
 def main(sequence_list):
     print("starting multiprocessing")
-    # sequence_list = list(sequence_map.values())
     pool = Pool()
-    param_list = [pool.apply(calculateParameters, args = [seq]) for seq in sequence_list]
+    param_list = [pool.map(calculateParameters, sequence_list)]
     pool.close()
     print("-------------------------DONE--------------------------")
     return param_list
 
-
 def assign_params(param_map,a, b, c, d, e, f, g, h, i, j, k, l, ma, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab, ac, ad, ae):
-    # print("assigning")
     param_map['a'].append(a)
     param_map['b'].append(b)
     param_map['c'].append(c)
@@ -46,7 +44,6 @@ def assign_params(param_map,a, b, c, d, e, f, g, h, i, j, k, l, ma, n, o, p, q, 
     return param_map
 
 def calculateMovingAverages(param_map):
-    # print("calculateMovingAverage")
     moving_win_size = 25
     moving_param_map = {}
     for k,v in param_map.items():
@@ -56,8 +53,6 @@ def calculateMovingAverages(param_map):
             this_window = arr[i : i+moving_win_size]
             window_avg = sum(this_window)/moving_win_size
             moving_param_map[k].append(window_avg)
-    # print("CalculateMoving Average Done!!")
-    # return moving_param_map
     return normalizeMovingAverages(moving_param_map)
 
 def normalizeMovingAverages(moving_param_map):
@@ -722,15 +717,4 @@ def calculateParameters(b_arr2):
             ae = -172.176
 
             assign_params(param_map, a, b, c, d, e, f, g, h, i, j, k, l, ma, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab,ac, ad, ae)
-    # print("assigning done!")
-    # print(param_map)
-    # import sys
-    # sys.exit()
     return calculateMovingAverages(param_map)
-
-# if __name__ == '__main__':
-#     sequence_list = list(sequence_map.values())
-#     pool = Pool()
-#     param_list = pool.map(calculateParameters, sequence_list)
-#     print(param_list)
-

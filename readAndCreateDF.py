@@ -7,9 +7,6 @@ from multiprocessing import *
 
 import datetime
 
-# print(datetime.datetime.now())
-
-# def main(sequence_map):
 if __name__ == '__main__':
     start=datetime.datetime.now()
 
@@ -28,7 +25,7 @@ if __name__ == '__main__':
 
 
     sequence_list = list(sequence_map_tss.values())
-#     print(type(sequence_list[0]))
+    print(type(sequence_list))
 
     asyncPython.main(sequence_list)
     print(reading_end - start)
