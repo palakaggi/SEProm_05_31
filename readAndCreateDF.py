@@ -23,11 +23,15 @@ if __name__ == '__main__':
     print("reading done")
     reading_end = datetime.datetime.now()
 
+    sequence_list_tss = list(sequence_map_tss.values())
+    sequence_list_cds = list(sequence_map_cds.values())
 
-    sequence_list = list(sequence_map_tss.values())
-    print(type(sequence_list))
+    tss_normalised_map = asyncPython.main(sequence_list_tss)
+    print(tss_normalised_map[0])
 
-    asyncPython.main(sequence_list)
+    cds_normalized_map = asyncPython.main(sequence_list_cds)
+    print(cds_normalized_map[0])
+
     print(reading_end - start)
     print(datetime.datetime.now()-reading_end)
 
