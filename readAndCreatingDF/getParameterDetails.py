@@ -58,7 +58,6 @@ def iterateSequences(sequence_map):
         parameters['combined_params_map']['structuralDecreasing_params'][key] = combineStructEnergyParams(structuralDecreasing_params,parameters['normalized_params_map'][key])
 
     parameters['combined_params_map'] = transformStructEnerMap(parameters['combined_params_map'])
-    # print (parameters['combined_params_map'][20]['energyDecreasing_params'])
     return parameters
 
 def assign_params(param_map,a, b, c, d, e, f, g, h, i, j, k, l, ma, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab, ac, ad, ae):

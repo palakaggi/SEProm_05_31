@@ -2,16 +2,16 @@ from multiprocessing import *
 import os
 
 def main(sequence_list):
-    print("starting multiprocessing")
+    print("starting normalisation of read sequences")
     pool = Pool()
     param_list = pool.map(calculateParameters, sequence_list)
     pool.close()
     print("len of output is {}".format(len(param_list)))
-    print(type(param_list[0]))
-    normalised_param_dict = {i: param_list[i] for i in range(len(param_list))}
+    # print(type(param_list[0]))
+    # normalised_param_dict = {i: param_list[i] for i in range(len(param_list))}
     # print(param_list[0].keys())
     print("-------------------------DONE--------------------------")
-    return normalised_param_dict
+    return param_list
 
 def assign_params(param_map,a, b, c, d, e, f, g, h, i, j, k, l, ma, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab, ac, ad, ae):
     param_map['a'].append(a)

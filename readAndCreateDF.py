@@ -27,13 +27,20 @@ if __name__ == '__main__':
     sequence_list_cds = list(sequence_map_cds.values())
 
     tss_normalised_map = asyncPython.main(sequence_list_tss)
-    print(tss_normalised_map[0])
+#     print(tss_normalised_map[0])
 
-    cds_normalized_map = asyncPython.main(sequence_list_cds)
-    print(cds_normalized_map[0])
+    print("normalising done")
+    normalising_time = datetime.datetime.now()
+
+#     cds_normalized_map = asyncPython.main(sequence_list_cds)
+#     print(cds_normalized_map[0])
+
+    createDataFrame.createDF(tss_normalised_map)
 
     print(reading_end - start)
-    print(datetime.datetime.now()-reading_end)
+    print(normalising_time - reading_end)
+    print(datetime.datetime.now()-normalising_time)
+
 
     import sys
     sys.exit()

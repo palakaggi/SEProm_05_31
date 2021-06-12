@@ -1,4 +1,5 @@
 import pandas as pd
+import multiprocessing as mp
 
 params = ['a','b','c','d','e','f','g','h','i','j','k','l','ma','n','o','p','q','r','s','t','u','v','w','x','y','z','aa','ab','ac','ad','ae']
 motifParams = ['structuralIncreasing_params','structuralDecreasing_params','energyIncreasing_params','energyDecreasing_params']
@@ -12,7 +13,7 @@ def avg_window(start, stop, params, params_map):
         except:
             params_list = params_map[p]
         avg_p = sum(params_list[start:stop])/(stop-start)
-        arr.append(avg_p)
+        arr.append(float(avg_p))
     return arr
 
 def createMotifDF(normalized_map_tss):
@@ -155,25 +156,47 @@ def createDF(normalized_map_tss):
     :return: A pandas DF with 31 parameters as their columns and TSS/no TSS
     """
     print("CREATING NORMALISED DATAFRAME")
-    seq_data = pd.DataFrame(columns=params)
-    for seq in normalized_map_tss.keys():
-        m = [float(i) for i in avg_window(425, 505, params, normalized_map_tss[seq])]
-        seq_data.loc[seq] = m
+    nml = len(normalized_map_tss)
+    pool = mp.Pool(4)
+    m_list = pool.starmap(avg_window,[(425, 505, params, normalized_map_tss[seq]) for seq in range(nml)])
+    pool.close()
 
-    l = len(seq_data.index)
+    # print(m_list)
+    seq_data = pd.DataFrame(m_list, columns=params)
+    seq_data['TSS'] = 1
+    # print(seq_data)
+    # for seq in normalized_map_tss.keys():
+    #     m = [float(i) for i in avg_window(425, 505, params, normalized_map_tss[seq])]
+    #     seq_data.loc[seq] = m
 
-    for seq in normalized_map_tss.keys():
-        m = [float(i) for i in avg_window(700, 780, params, normalized_map_tss[seq])]
-        seq_data.loc[l + seq] = m
+    # l = len(seq_data.index)
 
-    seq_data.loc[:l, 'TSS'] = 1
-    seq_data.loc[l:, 'TSS'] = 0
+    pool = mp.Pool(4)
+    m_list = pool.starmap(avg_window, [(700, 780, params, normalized_map_tss[seq]) for seq in range(nml)])
+    pool.close()
+
+    # print(m_list)
+    seq_data_no_tss = pd.DataFrame(m_list, columns=params)
+    seq_data_no_tss['TSS'] = 0
+
+    # print(seq_data_no_tss)
+
+    final_df = pd.concat([seq_data, seq_data_no_tss], ignore_index=True)
+    # print(final_df)
+
+    return
+    # for seq in normalized_map_tss.keys():
+    #     m = [float(i) for i in avg_window(700, 780, params, normalized_map_tss[seq])]
+    #     seq_data.loc[l + seq] = m
+
+    # seq_data.loc[:l, 'TSS'] = 1
+    # seq_data.loc[l:, 'TSS'] = 0
 
     # tss['TSS'] = 1
     # no_tss['TSS'] = 0
 
     # combined_df = pd.concat([tss, no_tss], ignore_index=True)
-    seq_data.to_csv('training80window_no_mov_avg.csv')
+    # seq_data.to_csv('training80window_no_mov_avg.csv')
 
 
 
