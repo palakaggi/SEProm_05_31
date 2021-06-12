@@ -183,6 +183,7 @@ def createDF(normalized_map_tss):
 
     final_df = pd.concat([seq_data, seq_data_no_tss], ignore_index=True)
     # print(final_df)
+    final_df.to_csv('training80window_no_mov_avg.csv')
 
     return
     # for seq in normalized_map_tss.keys():
