@@ -169,7 +169,7 @@ def createMotifDF(normalized_map_tss):
     pool.join()
     seq_data = pd.concat(results)
     seq_data.to_csv('motif_data.csv')
-    print(seq_data)
+    # print(seq_data)
 
 
 def createDF(normalized_map_tss):
