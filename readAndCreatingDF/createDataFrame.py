@@ -7,13 +7,16 @@ motifParams = ['SIParams_all_seq','SDParams_all_seq', 'EIparams_all_seq', 'EDPar
 def motif_helper(normalised_seq_list):
     seq_data = pd.DataFrame(columns=motifParams)
 
-    params1 = motifParams+['motif']
+    params1 = motifParams+['motif']+['TSS']
     m = avg_window(486, 493, motifParams, normalised_seq_list)
     m.append('m_0_0')
+    m.append(1)
     n = avg_window(462, 472, motifParams, normalised_seq_list)
     n.append('m_0_1')
+    n.append(1)
     l = avg_window(420, 437, motifParams, normalised_seq_list)
     l.append('m_0_2')
+    l.append(1)
     seq_data = seq_data.append(pd.Series(m, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(n, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(l, index=params1), ignore_index=True)
@@ -21,12 +24,16 @@ def motif_helper(normalised_seq_list):
 
     m = avg_window(487, 494, motifParams, normalised_seq_list)
     m.append('m_1_0')
+    m.append(1)
     n = avg_window(464, 471, motifParams, normalised_seq_list)
     n.append('m_1_1')
+    n.append(1)
     l = avg_window(453, 462, motifParams, normalised_seq_list)
     l.append('m_1_2')
+    l.append(1)
     k = avg_window(440, 452, motifParams, normalised_seq_list)
     k.append('m_1_3')
+    k.append(1)
     seq_data = seq_data.append(pd.Series(m, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(n, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(l, index=params1), ignore_index=True)
@@ -34,12 +41,16 @@ def motif_helper(normalised_seq_list):
 
     m = avg_window(483, 494, motifParams, normalised_seq_list)
     m.append('m_2_0')
+    m.append(1)
     n = avg_window(463, 472, motifParams, normalised_seq_list)
     n.append('m_2_1')
+    n.append(1)
     l = avg_window(450, 459, motifParams, normalised_seq_list)
     l.append('m_2_2')
+    l.append(1)
     k = avg_window(434, 445, motifParams, normalised_seq_list)
     k.append('m_2_3')
+    k.append(1)
     seq_data = seq_data.append(pd.Series(m, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(n, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(l, index=params1), ignore_index=True)
@@ -47,12 +58,16 @@ def motif_helper(normalised_seq_list):
 
     m = avg_window(487, 498, motifParams, normalised_seq_list)
     m.append('m_3_0')
+    m.append(1)
     n = avg_window(463, 472, motifParams, normalised_seq_list)
     n.append('m_3_1')
+    n.append(1)
     l = avg_window(450, 459, motifParams, normalised_seq_list)
     l.append('m_3_2')
+    l.append(1)
     k = avg_window(432, 445, motifParams, normalised_seq_list)
     k.append('m_3_3')
+    k.append(1)
     seq_data = seq_data.append(pd.Series(m, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(n, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(l, index=params1), ignore_index=True)
@@ -60,22 +75,29 @@ def motif_helper(normalised_seq_list):
 
     m = avg_window(786, 793, motifParams, normalised_seq_list)
     m.append('nm_0_0')
+    m.append(0)
     n = avg_window(763, 772, motifParams, normalised_seq_list)
     n.append('nm_0_1')
+    n.append(0)
     l = avg_window(720, 737, motifParams, normalised_seq_list)
     l.append('nm_0_2')
+    l.append(0)
     seq_data = seq_data.append(pd.Series(m, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(n, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(l, index=params1), ignore_index=True)
 
     m = avg_window(787, 794, motifParams, normalised_seq_list)
     m.append('nm_1_0')
+    m.append(0)
     n = avg_window(764, 771, motifParams, normalised_seq_list)
     n.append('nm_1_1')
+    n.append(0)
     l = avg_window(753, 762, motifParams, normalised_seq_list)
     l.append('nm_1_2')
+    l.append(0)
     k = avg_window(740, 752, motifParams, normalised_seq_list)
     k.append('nm_1_3')
+    k.append(0)
     seq_data = seq_data.append(pd.Series(m, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(n, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(l, index=params1), ignore_index=True)
@@ -83,12 +105,16 @@ def motif_helper(normalised_seq_list):
 
     m = avg_window(783, 794, motifParams, normalised_seq_list)
     m.append('nm_2_0')
+    m.append(0)
     n = avg_window(763, 772, motifParams, normalised_seq_list)
     n.append('nm_2_1')
+    n.append(0)
     l = avg_window(750, 759, motifParams, normalised_seq_list)
     l.append('nm_2_2')
+    l.append(0)
     k = avg_window(734, 745, motifParams, normalised_seq_list)
     k.append('nm_2_3')
+    k.append(0)
     seq_data = seq_data.append(pd.Series(m, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(n, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(l, index=params1), ignore_index=True)
@@ -96,16 +122,24 @@ def motif_helper(normalised_seq_list):
 
     m = avg_window(787, 798, motifParams, normalised_seq_list)
     m.append('nm_3_0')
+    m.append(0)
     n = avg_window(763, 772, motifParams, normalised_seq_list)
     n.append('nm_3_1')
+    n.append(0)
     l = avg_window(750, 759, motifParams, normalised_seq_list)
     l.append('nm_3_2')
+    l.append(0)
     k = avg_window(732, 745, motifParams, normalised_seq_list)
     k.append('nm_3_3')
+    k.append(0)
     seq_data = seq_data.append(pd.Series(m, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(n, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(l, index=params1), ignore_index=True)
     seq_data = seq_data.append(pd.Series(k, index=params1), ignore_index=True)
+
+    # no_tss = seq_data.loc[seq_data['motif'].str.contains("nm", case=False)]
+    # print(no_tss)
+
     return seq_data
 
 def avg_window(start, stop, params, params_map):
@@ -134,8 +168,9 @@ def createMotifDF(normalized_map_tss):
     pool.close()
     pool.join()
     seq_data = pd.concat(results)
-
+    seq_data.to_csv('motif_data.csv')
     print(seq_data)
+
 
 def createDF(normalized_map_tss):
     """

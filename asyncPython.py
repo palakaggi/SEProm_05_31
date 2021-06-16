@@ -37,7 +37,7 @@ def energyStructParamsMP(normalised_params_list):
     pool.join()
 
     pool = Pool()
-    EDParams_all_seq = pool.starmap(combineStructEnergyParams,[(SI,list(normalised_params_list[seq].items())) for seq in range(nml)])
+    EDParams_all_seq = pool.starmap(combineStructEnergyParams,[(ED,list(normalised_params_list[seq].items())) for seq in range(nml)])
     pool.close()
     pool.join()
 
