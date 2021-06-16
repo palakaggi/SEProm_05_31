@@ -23,11 +23,12 @@ if __name__ == '__main__':
     print("reading done")
     reading_end = datetime.datetime.now()
 
-    sequence_list_tss = list(sequence_map_tss.values())
-    sequence_list_cds = list(sequence_map_cds.values())
 
-    tss_normalised_map = asyncPython.main(sequence_list_tss)
-#     print(tss_normalised_map[0])
+#COMMENTING FOR NOW:
+    sequence_list_tss = list(sequence_map_tss.values())
+#     sequence_list_cds = list(sequence_map_cds.values())
+
+    tss_normalised_map = asyncPython.normalize_params(sequence_list_tss)
 
     print("normalising done")
     normalising_time = datetime.datetime.now()
@@ -35,36 +36,26 @@ if __name__ == '__main__':
 #     cds_normalized_map = asyncPython.main(sequence_list_cds)
 #     print(cds_normalized_map[0])
 
+    struct_energy_map = asyncPython.energyStructParamsMP(tss_normalised_map)
+
+    combining_params_time = datetime.datetime.now()
+
+    createDataFrame.createMotifDF(struct_energy_map)
     createDataFrame.createDF(tss_normalised_map)
+
+    df_time = datetime.datetime.now()
 
     print(reading_end - start)
     print(normalising_time - reading_end)
-    print(datetime.datetime.now()-normalising_time)
+    print(combining_params_time-normalising_time)
+    print(df_time-combining_params_time)
 
 
     import sys
     sys.exit()
-# print(sequence_map_tss.keys())
 
-
-# parameter_map_tss = {}
-# parameter_map_tss = getParameterDetails.iterateSequences(sequence_map_tss)
-#
-# parameter_map_cds = {}
-# parameter_map_cds = getParameterDetails.iterateSequences(sequence_map_cds)
-#
-#
-# # print(parameter_map_tss['combined_params_map'][0])
-#
 # #PLOTTING
 # name = filepath_tss.split('/')[-1].split(' ')[0]
 # print(name)
 # # plotting(parameter_map_tss, parameter_map_cds, name)
 # #PLOTTING OVER
-#
-# #CREATE DATAFRAME
-# createDataFrame.createMotifDF(parameter_map_tss['combined_params_map'])
-# createDataFrame.createDF(parameter_map_tss['normalized_params_map'])
-#
-# print(datetime.datetime.now())
-#

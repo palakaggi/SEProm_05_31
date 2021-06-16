@@ -1,17 +1,48 @@
 from multiprocessing import *
 import os
+import numpy as np
 
-def main(sequence_list):
+
+SI=['k','p','q','s','u','v','x','g','n','r','aa','ab']
+SD=['a','b','f','h','l','ma','c','d','e','i','j','o','t','w','y','z']
+
+EI=['ac','ad']
+ED=['ae']
+
+
+def normalize_params(sequence_list):
     print("starting normalisation of read sequences")
     pool = Pool()
     param_list = pool.map(calculateParameters, sequence_list)
     pool.close()
-    print("len of output is {}".format(len(param_list)))
-    # print(type(param_list[0]))
-    # normalised_param_dict = {i: param_list[i] for i in range(len(param_list))}
-    # print(param_list[0].keys())
-    print("-------------------------DONE--------------------------")
     return param_list
+
+def energyStructParamsMP(normalised_params_list):
+
+    nml = len(normalised_params_list)
+    print("Starting combining Energy and Struct")
+    pool = Pool()
+    SIParams_all_seq = pool.starmap(combineStructEnergyParams,[(SI,list(normalised_params_list[seq].items())) for seq in range(nml)])
+    pool.close()
+    pool.join()
+
+    pool = Pool()
+    SDParams_all_seq = pool.starmap(combineStructEnergyParams,[(SD,list(normalised_params_list[seq].items())) for seq in range(nml)])
+    pool.close()
+    pool.join()
+
+    pool = Pool()
+    EIparams_all_seq = pool.starmap(combineStructEnergyParams,[(EI,list(normalised_params_list[seq].items())) for seq in range(nml)])
+    pool.close()
+    pool.join()
+
+    pool = Pool()
+    EDParams_all_seq = pool.starmap(combineStructEnergyParams,[(SI,list(normalised_params_list[seq].items())) for seq in range(nml)])
+    pool.close()
+    pool.join()
+
+    combined_params_map = dict(zip(['SIParams_all_seq','SDParams_all_seq', 'EIparams_all_seq', 'EDParams_all_seq'],[SIParams_all_seq,SDParams_all_seq, EIparams_all_seq, EDParams_all_seq]))
+    return transformStructEnerMap(combined_params_map)
 
 def assign_params(param_map,a, b, c, d, e, f, g, h, i, j, k, l, ma, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab, ac, ad, ae):
     param_map['a'].append(a)
@@ -722,3 +753,24 @@ def calculateParameters(b_arr2):
 
             assign_params(param_map, a, b, c, d, e, f, g, h, i, j, k, l, ma, n, o, p, q, r, s, t, u, v, w, x, y, z, aa, ab,ac, ad, ae)
     return calculateMovingAverages(param_map)
+
+def combineStructEnergyParams(array,normalized_list_tuples):
+    normalized_map = dict(normalized_list_tuples)
+    map = np.zeros(976)
+    for k in array:
+        arr = normalized_map[k]
+        for i in range(len(arr)):
+            map[i]+=arr[i]
+    return map
+
+def transformStructEnerMap(struct_ener_map):
+    transformed_map = {}
+    for k in struct_ener_map.keys():
+        values_of_all_seq_per_param = struct_ener_map[k]
+        for i in range(len(values_of_all_seq_per_param)):
+            try:
+                transformed_map[i]
+            except KeyError:
+                transformed_map[i] = {}
+            transformed_map[i][k] = values_of_all_seq_per_param[i]
+    return transformed_map
