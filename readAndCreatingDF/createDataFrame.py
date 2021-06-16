@@ -167,7 +167,7 @@ def createMotifDF(normalized_map_tss):
     results = pool.starmap(motif_helper, [[combined_params_list[seq]] for seq in range(len(combined_params_list))])
     pool.close()
     pool.join()
-    seq_data = pd.concat(results)
+    seq_data = pd.concat(results, ignore_index=True)
     seq_data.to_csv('motif_data.csv')
     # print(seq_data)
 
