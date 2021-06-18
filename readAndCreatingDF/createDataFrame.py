@@ -160,9 +160,6 @@ def createMotifDF(normalized_map_tss):
     """
     print("-------CREATING MOTIF DATAFRAME-------")
     combined_params_list = list(normalized_map_tss.values())
-    # print(len(combined_params_list))
-    # print(combined_params_list[0])
-    # print(type(combined_params_list[0]))
     pool = mp.Pool()
     results = pool.starmap(motif_helper, [[combined_params_list[seq]] for seq in range(len(combined_params_list))])
     pool.close()
@@ -186,11 +183,6 @@ def createDF(normalized_map_tss):
 
     seq_data = pd.DataFrame(m_list, columns=params)
     seq_data['TSS'] = 1
-    # print(seq_data)
-    # for seq in normalized_map_tss.keys():
-    #     m = [float(i) for i in avg_window(425, 505, params, normalized_map_tss[seq])]
-    #     seq_data.loc[seq] = m
-    # l = len(seq_data.index)
 
     pool = mp.Pool(4)
     m_list = pool.starmap(avg_window, [(700, 780, params, normalized_map_tss[seq]) for seq in range(nml)])
@@ -202,15 +194,3 @@ def createDF(normalized_map_tss):
     final_df = pd.concat([seq_data, seq_data_no_tss], ignore_index=True)
     final_df.to_csv('training80window_no_mov_avg.csv')
     return
-    # for seq in normalized_map_tss.keys():
-    #     m = [float(i) for i in avg_window(700, 780, params, normalized_map_tss[seq])]
-    #     seq_data.loc[l + seq] = m
-
-    # seq_data.loc[:l, 'TSS'] = 1
-    # seq_data.loc[l:, 'TSS'] = 0
-
-    # tss['TSS'] = 1
-    # no_tss['TSS'] = 0
-
-    # combined_df = pd.concat([tss, no_tss], ignore_index=True)
-    # seq_data.to_csv('training80window_no_mov_avg.csv')
