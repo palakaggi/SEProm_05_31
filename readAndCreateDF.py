@@ -19,7 +19,7 @@ if __name__ == '__main__':
         filepath_tss = str(input("Please enter the input sequence file."))
 
     sequence_map_tss = readSequenceFile.readSequenceFile(filepath_tss)
-    sequence_map_cds = readSequenceFile.readSequenceFile(filepath_cds)
+#     sequence_map_cds = readSequenceFile.readSequenceFile(filepath_cds)
     print("reading done")
     reading_end = datetime.datetime.now()
 

@@ -3,6 +3,8 @@ TEST_MOTIF_DATA.csv
 training80window_no_mov_avg.csv
 .idea/
 *.png
-TEST_MOTIF_DATA.csv
+motif_data.csv
 training80window_no_mov_avg.csv
 
+dataset_ML.py
+requirements.txt
