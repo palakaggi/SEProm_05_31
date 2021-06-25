@@ -7,3 +7,4 @@ motif_data.csv
 training80window_no_mov_avg.csv
 SEProm_venv/
 dataset_ML.py
+.DS_Store
