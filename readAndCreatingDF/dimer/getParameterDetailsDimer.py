@@ -1,5 +1,4 @@
 from multiprocessing import *
-import os
 import numpy as np
 
 
@@ -18,7 +17,6 @@ def normalize_params(sequence_list):
     return param_list
 
 def energyStructParamsMP(normalised_params_list):
-
     nml = len(normalised_params_list)
     print("Starting combining Energy and Struct")
     pool = Pool()

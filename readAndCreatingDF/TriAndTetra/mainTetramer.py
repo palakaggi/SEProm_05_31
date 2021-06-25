@@ -1,14 +1,10 @@
-# from src import readSequenceFile, getParameterDetails, pcaRegressionAlgorithm, motifsAlgorithm, processResults, writeFile,pca_training,reg_training,dataframe_woraround, cross_correlation
 from readAndCreatingDF import readSequenceFile
 import pandas as pd
 from plotting import plotting
-# import readSequenceFile
-import numpy as np
-import matplotlib.pyplot as plt
 from multiprocessing import Pool
 
 tetramer_tss = '/Users/palakaggarwal/Desktop/Palak/Projects/SEProm_04_28/train_data/tss.txt'
-paramVals = '/Users/palakaggarwal/Desktop/Palak/Projects/SEProm_04_28/TriAndTetra/triAndTetraData/Tetramer.xlsx'
+paramVals = '/Users/palakaggarwal/Desktop/Palak/Projects/SEProm_04_28/train_data/triAndTetraData/Tetramer.xlsx'
 tetramer_cds = '/Users/palakaggarwal/Desktop/Palak/Projects/SEProm_04_28/train_data/cds.txt'
 
 strInc = []
@@ -37,9 +33,6 @@ def calculateParameters(sequence_map_per_seq,paramValues):
     list_motifs = []
     for m in range(no_of_bases-3):
         list_motifs.append(sequence_map_per_seq[m:m+4])
-    # print(len(list_motifs))
-    # import sys
-    # sys.exit()
     for motif in list_motifs:
         if motif in paramValues.columns:
             param_map['l'].append(paramValues[motif]['l'])
@@ -77,26 +70,23 @@ def iterateSequences(sequence_map):
     pool = Pool()
     param_list = pool.starmap(calculateParameters, [(seq, paramValues) for seq in sequence_list])
     pool.close()
-    # print(len(param_list)) == no of seq
-    # print(type(param_list)) == list
-    # print(type(param_list[0])) == dict of every seq
-    # print((param_list[0]).keys()) == params(l,m,n,o,p,q)
     return param_list
 
 
 if __name__ == '__main__':
     sequence_map_tss = readSequenceFile.readSequenceFile(tetramer_tss)
-    sequence_map_cds =readSequenceFile.readSequenceFile(tetramer_cds)
+    # sequence_map_cds =readSequenceFile.readSequenceFile(tetramer_cds)
 
     print("Reading of tetramer data done!!")
 
     tetra_tss_seq_list = iterateSequences(sequence_map_tss)
-    tetra_cds_seq_list = iterateSequences(sequence_map_cds)
+    # tetra_cds_seq_list = iterateSequences(sequence_map_cds)
 
     print("Normalization of tetramer data done!!")
 
+    #plotting
+    """
     name = tetramer_tss.split('/')[-1].split(' ')[0]
-
     plotting.plotting_tetra(tetra_tss_seq_list, tetra_cds_seq_list, name)
-
     print("Plotting of Tetramer data done!!")
+    """
