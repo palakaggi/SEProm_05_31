@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from pathlib import Path
+
 
 def plotting(parameter_map_tss, parameter_map_cds, name):
     len_seq_param = len(parameter_map_tss['normalized_params_map'][0]['a'])
@@ -207,7 +209,7 @@ def plotting(parameter_map_tss, parameter_map_cds, name):
                 p_cds, q_cds, r_cds, s_cds, t_cds, u_cds, v_cds, w_cds, x_cds, y_cds, z_cds, aa_cds, ab_cds, ac_cds,
                 ad_cds, ae_cds]
 
-    new_plot_dir = os.path.join("plots/", name)
+    new_plot_dir = os.path.join("plotting/plots/tetra", name)
     try:
         os.mkdir(new_plot_dir)
     except FileExistsError as error:
@@ -224,3 +226,73 @@ def plotting(parameter_map_tss, parameter_map_cds, name):
 
     # print("DONE!!!!!!!")
 
+def plotting_tetra(tetra_tss_seq_map, tetra_cds_seq_map, name):
+    print("PLOTTTING!!!!!!!!!!!")
+
+    ll = len(tetra_tss_seq_map)
+
+    l = [0 for i in range(974)]
+    m = [0 for i in range(974)]
+    n = [0 for i in range(974)]
+    o = [0 for i in range(974)]
+    p = [0 for i in range(974)]
+    q = [0 for i in range(974)]
+
+    l_cds = [0 for i in range(973)]
+    m_cds = [0 for i in range(973)]
+    n_cds = [0 for i in range(973)]
+    o_cds = [0 for i in range(973)]
+    p_cds = [0 for i in range(973)]
+    q_cds = [0 for i in range(973)]
+
+    for i in range(ll):
+        try:
+            l = np.add(l,tetra_tss_seq_map[i]['l'])
+            m = np.add(m,tetra_tss_seq_map[i]['m'])
+            n = np.add(n,tetra_tss_seq_map[i]['n'])
+            o = np.add(o,tetra_tss_seq_map[i]['o'])
+            p = np.add(p, tetra_tss_seq_map[i]['p'])
+            q = np.add(q, tetra_tss_seq_map[i]['q'])
+        except :
+            print("error at:", i)
+
+    cl=len(tetra_cds_seq_map)
+
+    for i in range(cl):
+        l_cds = np.add(l_cds,tetra_cds_seq_map[i]['l'])
+        m_cds = np.add(m_cds,tetra_cds_seq_map[i]['m'])
+        n_cds = np.add(n_cds,tetra_cds_seq_map[i]['n'])
+        o_cds = np.add(o_cds,tetra_cds_seq_map[i]['o'])
+        p_cds = np.add(p_cds,tetra_cds_seq_map[i]['p'])
+        q_cds = np.add(q_cds,tetra_cds_seq_map[i]['q'])
+
+    l = [i/ll for i in l]
+    m = [i / ll for i in m]
+    n = [i / ll for i in n]
+    o = [i / ll for i in o]
+    p = [i / ll for i in p]
+    q = [i / ll for i in q]
+    tss_list = [l, m, n, o, p, q]
+
+    l_cds = [i / cl for i in l_cds]
+    m_cds = [i / cl for i in m_cds]
+    n_cds = [i / cl for i in n_cds]
+    o_cds = [i / cl for i in o_cds]
+    p_cds = [i / cl for i in p_cds]
+    q_cds = [i / cl for i in q_cds]
+    cds_list = [l_cds, m_cds, n_cds, o_cds, p_cds, q_cds]
+
+    new_plot_dir = os.path.join("../plotting/plots/tetra/", name)
+    Path(new_plot_dir).mkdir(parents=True, exist_ok=True)
+
+    for m in range(len(tss_list)):
+        plt.clf()
+        plt.xlim([0, 1000])
+        plt.xticks([i for i in range(0, 1100, 100)], [i for i in range(-500, 600, 100)])
+        plt.plot(tss_list[m])
+        plt.plot(cds_list[m])
+        plt.gcf()
+        plt.savefig(str(new_plot_dir)+"/" + str(m) + ".png")
+
+    import sys
+    sys.exit()
