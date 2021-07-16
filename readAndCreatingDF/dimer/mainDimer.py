@@ -2,7 +2,7 @@ from readAndCreatingDF import readSequenceFile, createDataFrame
 from plotting import plotting
 import pandas as pd
 import getParameterDetailsDimer
-from featureSelection import filterMethods
+from featureSelection import filterMethods, WrapperFeatureSelection
 import datetime
 
 if __name__ == '__main__':
@@ -59,3 +59,6 @@ if __name__ == '__main__':
     df = df.drop('Unnamed: 0', axis = 1)
     filterMethods.mutualInformation(df)
     filterMethods.ANOVAFeatureSelection(df)
+
+    WrapperFeatureSelection.RecursiveFeatureSelection(df)
+    WrapperFeatureSelection.forwardFeatureSelection(df)
