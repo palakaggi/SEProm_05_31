@@ -2,7 +2,7 @@ from readAndCreatingDF import readSequenceFile, createDataFrame
 from plotting import plotting
 import pandas as pd
 import getParameterDetailsDimer
-from featureSelection import filterMethods, WrapperFeatureSelection
+from featureSelection import filterMethods, WrapperFeatureSelection, VarianceInflationFactor
 import datetime
 
 if __name__ == '__main__':
@@ -57,8 +57,9 @@ if __name__ == '__main__':
     train_file = '/Users/palakaggarwal/Desktop/Palak/Projects/SEPromTraining/input/training80window_mov_avg.csv'
     df = pd.read_csv(train_file)
     df = df.drop('Unnamed: 0', axis = 1)
-    filterMethods.mutualInformation(df)
-    filterMethods.ANOVAFeatureSelection(df)
+    # filterMethods.mutualInformation(df)
+    # filterMethods.ANOVAFeatureSelection(df)
 
-    WrapperFeatureSelection.RecursiveFeatureSelection(df)
-    WrapperFeatureSelection.forwardFeatureSelection(df)
+    # WrapperFeatureSelection.RecursiveFeatureSelection(df)
+    # WrapperFeatureSelection.forwardFeatureSelection(df)
+    print(VarianceInflationFactor.cal_vif(df))
